@@ -1,0 +1,17 @@
+/* choo-view */
+
+`<main>
+  <h1>${author}</h1>
+  <p>${state.count}</p>
+  <button onclick=${(e) => send('increment')}></button>
+</main>`
+
+/* choo-model */
+{
+  local: {
+    author: ''
+  },
+  effects: {
+    increment: (action, state) => ({ count: state.count + 1 })
+  }
+}
