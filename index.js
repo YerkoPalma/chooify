@@ -35,11 +35,11 @@ module.exports = function chooify (file) {
     // get the model part
     const model = clean(data.match(modelRegex)[0])
     //  bind 'local' data to the local scope of component
-    let result = {
-      view,
-      model
-    }
-    stream.queue(`module.exports = ${JSON.stringify(result, null, 2)}`)
+    // let result = {
+    //  view,
+    //  model
+    // }
+    stream.queue(`module.exports = { view: ${view}, model: ${model} }`)
     stream.queue(null)
   }
   return stream

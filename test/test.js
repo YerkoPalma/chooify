@@ -46,6 +46,5 @@ describe('chooify', () => {
     const module = window.chooModule
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
-    console.log(module.view)
   })
 })
