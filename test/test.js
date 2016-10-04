@@ -17,14 +17,6 @@ function test (file, assert) {
   it(file, done => {
     fs.writeFileSync(mockEntry, `
 window.chooModule = require('../fixtures/${file}.choo')
-const choo = require('choo')
-const app = choo()
-app.model(chooModule.model)
-app.router(route => [
-  route('/', chooModule.view)
-])
-const tree = app.start()
-document.body.appendChild(tree)
     `)
     browserify(mockEntry)
       .transform(chooify)
@@ -54,7 +46,6 @@ describe('chooify', () => {
     const module = window.chooModule
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
-    const renderedMsg = window.document.getElementById('msg').textContent
-    expect(renderedMsg).to.equal('Hello world')
+    console.log(module.view)
   })
 })

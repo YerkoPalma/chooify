@@ -25,7 +25,13 @@ module.exports = function chooify (file) {
     const modelRegex = /(\/\* choo\-model \*\/)[\s\S]*(\/\* choo\-view \*\/)|(\/\* choo\-model \*\/)[\s\S]*/
 
     // get the view part
-    const view = clean(data.match(viewRegex)[0])
+    const view = `
+    (function () {
+      const html = require('bel')
+      return (state, prev, send) => { 
+        return html${clean(data.match(viewRegex)[0])}
+      }
+    })()`
     // get the model part
     const model = clean(data.match(modelRegex)[0])
     //  bind 'local' data to the local scope of component
