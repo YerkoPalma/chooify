@@ -1,16 +1,13 @@
 /* choo-view */
 
 `
-<main onload=${(e) => send('init')}>
-  <h1 id="msg"></h1>
+<main>
+  <h1>${state.name}</h1>
 </main>
 `
 
 /* choo-model */
 {
-  effects: {
-    init: (data, state, send, done) => {
-      document.getElementById('msg').innerHtml = 'Hello world'
-    }
-  }
+  namespace: 'ignored',
+  state: { name: 'Jota' }
 }

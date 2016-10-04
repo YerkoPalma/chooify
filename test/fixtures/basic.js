@@ -9,7 +9,5 @@ app.router(route => [
   route('/', basicComponent.view)
 ])
 
-const tree = app.start()
-
 // export app for tests
-module.exports = tree
+module.exports = app

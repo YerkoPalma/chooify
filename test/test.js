@@ -17,6 +17,8 @@ function test (file, assert) {
   it(file, done => {
     fs.writeFileSync(mockEntry, `
 window.chooModule = require('../fixtures/${file}.choo')
+window.chooApp = require('../fixtures/${file}.js')
+window.document.body.appendChild(window.chooApp.start())
     `)
     browserify(mockEntry)
       .transform(chooify)
@@ -46,5 +48,7 @@ describe('chooify', () => {
     const module = window.chooModule
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
+    const h1 = window.document.querySelector('h1').innerHTML
+    expect(h1).to.equal('Jota')
   })
 })
