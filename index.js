@@ -1,5 +1,6 @@
 'use strict'
 const through = require('through')
+const JSON5 = require('json5')
 
 module.exports = function chooify (file) {
   // ignore files without choo extension
@@ -36,17 +37,16 @@ function clean (str) {
 }
 
 function parseModel (model) {
-  const namespaceRegex = /namespace[\s]*:[^,]+,/
-  let output = clean(model)
+  let output = JSON5.parse(clean(model))
   // ignore namespace
-  output = output.replace(namespaceRegex, '')
+  if (output.namespace) delete output.namespace
   // exclude (ignore) state
 
   // check if local property is defined
   // check if effects, reducers and/or subscriptions are arrow functions
     // if they are, replace them by old fashioned functions
   // bind model.local to this in effects, reducers and subscriptions
-  return output
+  return JSON5.stringify(output)
 }
 
 function parseView (view) {
