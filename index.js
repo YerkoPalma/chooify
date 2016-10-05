@@ -41,6 +41,7 @@ function parseModel (model) {
   // ignore namespace
   if (output.namespace) delete output.namespace
   // exclude (ignore) state
+  if (output.state) delete output.state
 
   // check if local property is defined
   // check if effects, reducers and/or subscriptions are arrow functions

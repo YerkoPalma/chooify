@@ -9,5 +9,5 @@
 /* choo-model */
 {
   namespace: 'ignored',
-  state: { name: 'Jota' }
+  state: { name: 'Jota', undef: true }
 }

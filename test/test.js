@@ -46,9 +46,11 @@ window.document.body.appendChild(window.chooApp.start())
 describe('chooify', () => {
   test('basic', window => {
     const module = window.chooModule
+    const app = window.chooApp
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
     const h1 = window.document.querySelector('h1').innerHTML
-    expect(h1).to.equal('Jota')
+    expect(h1).to.equal('John Doe')
+    expect(app._store.state().undef).to.be.not.ok
   })
 })
