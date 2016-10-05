@@ -2,7 +2,7 @@
   "name": "chooify",
   "description": "Browserify transform to process .choo files as isolated, stateless choo components",
   "author": "YerkoPalma",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "index.js",
   "files": [
     "index.js"
