@@ -1,0 +1,20 @@
+/* choo-view */
+
+`
+<main>
+  <h1>${state.username} <${state.mail}></h1>
+  <p>You are now ${this.active ? '<span style="color:green;">active</span>' : '<span style="color:red;">not active</span>'}</p>
+
+  <button onclick=${(e) => send('toggle')}>Toggle state</button>
+</main>
+`
+
+/* choo-model */
+{
+  local: { active: true },
+  effects: {
+    toggle: (data, state, send, done) => {
+      this.local = !this.local
+    }
+  }
+}
