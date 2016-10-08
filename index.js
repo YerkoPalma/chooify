@@ -37,7 +37,12 @@ function clean (str) {
 }
 
 function parseModel (model) {
-  let output = JSON5.parse(clean(model))
+  const arrowFnRegex = /\([\s\S]*\)\s*=>\s*{/g
+  let str = clean(model)
+  if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join('function ' + str.match(arrowFnRegex)[0].replace('=>', ' '))
+  console.log(str)
+
+  let output = JSON5.parse(str)
   // ignore namespace
   if (output.namespace) delete output.namespace
   // exclude (ignore) state

@@ -7,6 +7,7 @@ const expect = require('chai').expect
 const rimraf = require('rimraf')
 const mkdirp = require('mkdirp')
 const jsdom = require('jsdom')
+const JSON5 = require('json5')
 
 const tempDir = path.resolve(__dirname, './temp')
 const mockEntry = path.resolve(tempDir, 'entry.js')
@@ -55,5 +56,12 @@ describe('chooify', () => {
     expect(app._store.state().undef).to.be.not.ok
     const span = window.document.querySelector('span').innerHTML
     expect(span).to.equal('Peter')
+  })
+
+  test('local', window => {
+    const module = window.chooModule
+    expect(module.view).to.be.ok
+    expect(module.model).to.be.ok
+    console.log(JSON5.stringify(module.model))
   })
 })
