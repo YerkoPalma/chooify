@@ -65,7 +65,7 @@ function parseView (view, local) {
       const local = ${JSON5.stringify(local)}
 
       return (function (state, prev, send) {
-        return html${clean(view)}
+        return html\`${clean(view)}\`
       }).bind(local)
   })()`
 }

@@ -1,11 +1,11 @@
 /* choo-view */
 
-`
+
 <main>
   <h1>${state.name}</h1>
   <span>${this.author}</span>
 </main>
-`
+
 
 /* choo-model */
 {
