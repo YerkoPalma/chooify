@@ -57,10 +57,9 @@ describe('chooify', () => {
     expect(span).to.equal('Peter')
   })
 
-  /* test('local', window => {
+  test('local', window => {
     const module = window.chooModule
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
-    console.log(JSON5.stringify(module.model))
-  }) */
+  })
 })

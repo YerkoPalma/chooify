@@ -6,14 +6,13 @@
   <button onclick=${(e) => send('toggle')}>Toggle state</button>
 </main>
 
-
 /* choo-model */
 
 {
-  local: { active: true },
+  local: { active: true, name: 'John Doe' },
   effects: {
     toggle: (data, state, send, done) => {
-      this.local = !this.local
+      this.active = !this.active
     }
   }
 }

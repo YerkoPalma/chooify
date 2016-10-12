@@ -6,7 +6,6 @@
   <span>${this.author}</span>
 </main>
 
-
 /* choo-model */
 {
   namespace: 'ignored',

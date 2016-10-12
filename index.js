@@ -1,6 +1,7 @@
 'use strict'
 const through = require('through')
 const JSON5 = require('json5')
+const falafel = require('falafel')
 
 module.exports = function chooify (file) {
   // ignore files without choo extension
@@ -38,22 +39,33 @@ function clean (str) {
 
 function parseModel (model) {
   const arrowFnRegex = /\([\s\S]*\)\s*=>\s*{/g
-  let str = clean(model)
-  if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join('function ' + str.match(arrowFnRegex)[0].replace('=>', ' '))
-  console.log(str)
+  let str = 'var o = ' + clean(model)
+  if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join('function ' + str.match(arrowFnRegex)[0].replace('=>', ''))
 
-  let output = JSON5.parse(str)
-  // ignore namespace
-  if (output.namespace) delete output.namespace
-  // exclude (ignore) state
-  if (output.state) delete output.state
-
+  let local
+  let output = falafel(str, (node) => {
+    // exclude (ignore) state
+    if (/Property/.test(node.type) && node.key.name === 'state') node.value.update('{}')
+    // ignore namespace
+    if (/Property/.test(node.type) && node.key.name === 'namespace') node.value.update('undefined')
+    // assign local value to this in effects
+    if (/Property/.test(node.type) && node.key.name === 'effects') {
+      node.value.properties.forEach(function (effect) {
+        effect.value.update('(' + effect.value.source() + ').bind(this.local)')
+      })
+    }
+    if (/Property/.test(node.type) && node.key.name === 'local') {
+      local = JSON5.parse(node.value.source())
+    }
+  })
+  let outputStr = output.toString()
+  console.log(local)
   // check if local property is defined
-  let local = output.local
+  // let local = output.local
   // check if effects, reducers and/or subscriptions are arrow functions
     // if they are, replace them by old fashioned functions
   // bind model.local to this in effects, reducers and subscriptions
-  return { model: JSON5.stringify(output), local }
+  return { model: outputStr.substring(8, outputStr.length), local }
 }
 
 function parseView (view, local) {

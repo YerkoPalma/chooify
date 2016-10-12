@@ -20,6 +20,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
+    "falafel": "^2.0.0",
     "json5": "^0.5.0",
     "through": "^2.3.8"
   },
