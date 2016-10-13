@@ -5,20 +5,20 @@
 ## TODO
 
 - [ ] `require` .choo files.
-  - [x] Parse view.
+  - [ ] Parse view.
     - [x] Wrap view function to bind local data to `this`.
     - [ ] Allow to require packages.
-  - [ ] Parse and export model.
+  - [x] Parse and export model.
     - [x] Ignore state.
     - [x] Remove namespaces.
     - [x] Read local data and pass it to view.
     - [x] Bind local data to this in effects.
-    - [ ] Bind local data to this in reducers.
-    - [ ] Bind local data to this in subscriptions.
-  - [ ] Allow to pass lcaol data when required.
+    - [x] Bind local data to this in reducers.
+    - [x] Bind local data to this in subscriptions.
+  - [ ] Allow to pass local data when required.
 - [ ] Create init hook.
   - [ ] Wrap initial state.
-  - [ ] Rerender with local changes.
+  - [ ] Re-render when there are local changes.
 - [ ] Make a _real life_ example.
 
 ## Installation

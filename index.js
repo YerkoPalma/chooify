@@ -49,7 +49,7 @@ function parseModel (model) {
     // ignore namespace
     if (/Property/.test(node.type) && node.key.name === 'namespace') node.value.update('undefined')
     // assign local value to this in effects
-    if (/Property/.test(node.type) && node.key.name === 'effects') {
+    if (/Property/.test(node.type) && ['effects', 'reducers', 'subscriptions'].indexOf(node.key.name) > -1) {
       node.value.properties.forEach(function (effect) {
         effect.value.update('(' + effect.value.source() + ').bind(this.local)')
       })
