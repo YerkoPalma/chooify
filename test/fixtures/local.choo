@@ -1,8 +1,8 @@
 /* choo-view */
 
 <main>
-  <h1>${state.username} <${state.mail}></h1>
-  <p>You are now ${this.active ? '<span style="color:green;">active</span>' : '<span style="color:red;">not active</span>'}</p>
+  <h1>${state.username} &lt;${state.mail}&gt;</h1>
+  <p>You are now <span style="color:${this.active ? 'green' : 'red'};">${this.active ? 'active' : 'not active'}</span></p>
   <button onclick=${(e) => send('toggle')}>Toggle state</button>
 </main>
 

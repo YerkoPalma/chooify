@@ -59,7 +59,6 @@ function parseModel (model) {
     }
   })
   let outputStr = output.toString()
-  console.log(local)
   // check if local property is defined
   // let local = output.local
   // check if effects, reducers and/or subscriptions are arrow functions

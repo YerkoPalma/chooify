@@ -61,5 +61,10 @@ describe('chooify', () => {
     const module = window.chooModule
     expect(module.view).to.be.ok
     expect(module.model).to.be.ok
+
+    // should have local state correctly setted
+    const p = window.document.querySelector('p').textContent
+    expect(p).to.equal('You are now active')
+    // should change state and render properly when effect is trigered
   })
 })

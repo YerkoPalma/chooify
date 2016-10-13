@@ -1,6 +1,22 @@
 # chooify [![Build Status](https://secure.travis-ci.org/YerkoPalma/chooify.svg?branch=master)](https://travis-ci.org/YerkoPalma/chooify) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-> Browserify transform to process .choo files as isolated, stateless choo components
+> WIP - Browserify transform to process .choo files as isolated, stateless choo components
+
+## TODO
+
+- [ ] `require` .choo files
+  - [x] Parse view
+    - [x] Wrap view function to bind local data to `this`
+  - [ ] Parse and export model
+    - [x] Ignore state
+    - [x] Remove namespaces
+    - [x] Read local data and pass it to view
+    - [x] Bind local data to this in effects
+    - [ ] Bind local data to this in reducers
+    - [ ] Bind local data to this in subscriptions
+- [ ] Create init hook
+  - [ ] Wrap initial state
+  - [ ] Rerender with local changes
 
 ## Installation
 
@@ -40,9 +56,9 @@ The above transform allows you to write choo stateless components like this
 
 /* choo-view */
 
-`<main onload=${(e) => send('toggle')}>
-  <h1 class="${active ? 'active' : ''}">${state.title}</h1>
-</main>`
+<main onload=${(e) => send('toggle')}>
+  <h1 class="${this.active ? 'active' : ''}">${state.title}</h1>
+</main>
 
 /* choo-model */
 {
