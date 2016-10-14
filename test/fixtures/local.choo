@@ -9,10 +9,21 @@
 /* choo-model */
 
 {
-  local: { active: true, name: 'John Doe' },
+  namespace: 'input',
+  state: {
+    title: 'my demo app'
+  },
+  local: {
+    author: '',
+    active: true
+  },
+  reducers: {
+    update: (data, state) => ({ title: data.payload })
+  },
   effects: {
-    toggle: (data, state, send, done) => {
-      this.active = !this.active
+    edit: (data, state, send, done) => {
+      document.title = data.payload
+      done()
     }
   }
 }

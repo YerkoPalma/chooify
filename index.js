@@ -38,24 +38,35 @@ function clean (str) {
 }
 
 function parseModel (model) {
-  const arrowFnRegex = /\([\s\S]*\)\s*=>\s*{/g
+  // const arrowFnRegex = /\s*=>\s*[{|\(]/g
   let str = 'var o = ' + clean(model)
-  if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join('function ' + str.match(arrowFnRegex)[0].replace('=>', ''))
+  // if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join(' function ' + str.match(arrowFnRegex)[0].replace('=>', ''))
 
   let local
   let output = falafel(str, (node) => {
+    // parse arrow functions
+    if (/ArrowFunctionExpression/.test(node.type)) {
+      const params = node.params.map(param => param.name).join(', ')
+      // inline arrow function
+      let body
+      if (/ObjectExpression/.test(node.body.type)) body = `{ return ${node.body.source()} }`
+      else body = '\n    ' + node.body.source()
+      node.update(`function (${params}) ${body}`)
+    }
     // exclude (ignore) state
     if (/Property/.test(node.type) && node.key.name === 'state') node.value.update('{}')
     // ignore namespace
     if (/Property/.test(node.type) && node.key.name === 'namespace') node.value.update('undefined')
+    if (/Property/.test(node.type) && node.key.name === 'local') {
+      local = JSON5.parse(node.value.source())
+    }
+  })
+  output = falafel(output.toString(), node => {
     // assign local value to this in effects
     if (/Property/.test(node.type) && ['effects', 'reducers', 'subscriptions'].indexOf(node.key.name) > -1) {
       node.value.properties.forEach(function (effect) {
         effect.value.update('(' + effect.value.source() + ').bind(this.local)')
       })
-    }
-    if (/Property/.test(node.type) && node.key.name === 'local') {
-      local = JSON5.parse(node.value.source())
     }
   })
   let outputStr = output.toString()
