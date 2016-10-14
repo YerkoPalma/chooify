@@ -64,7 +64,7 @@ describe('chooify', () => {
 
     // should have local state correctly setted
     const p = window.document.querySelector('p').textContent
-    expect(p).to.equal('You are now active')
+    expect(p).to.equal('Me, You are now active')
     // should change state and render properly when effect is trigered
   })
 })

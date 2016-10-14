@@ -1,6 +1,7 @@
 const choo = require('choo')
 const basicComponent = require('./local.choo')
 
+basicComponent.local.author = 'Me'
 const app = choo()
 
 app.model({

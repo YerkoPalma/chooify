@@ -24,8 +24,17 @@ module.exports = function chooify (file) {
     const parsedModel = parseModel(data.match(modelRegex)[0])
     // get the view part, ensure to pass the model object string (it has the local property)
     const view = parseView(data.match(viewRegex)[0], parsedModel.local)
+    // initialize local data only if it is present in the local property of the model
+    const init = `
+    function chooify () {}
+    chooify.local = ${JSON5.stringify(parsedModel.local)}
+    chooify.view = ${view}
+    chooify.model = ${parsedModel.model}
+    `
 
-    stream.queue(`module.exports = { view: ${view}, model: ${parsedModel.model} }`)
+    stream.queue(`
+    ${init}
+    module.exports = chooify`)
     stream.queue(null)
   }
   return stream
@@ -38,9 +47,7 @@ function clean (str) {
 }
 
 function parseModel (model) {
-  // const arrowFnRegex = /\s*=>\s*[{|\(]/g
   let str = 'var o = ' + clean(model)
-  // if (arrowFnRegex.test(str)) str = str.split(arrowFnRegex).join(' function ' + str.match(arrowFnRegex)[0].replace('=>', ''))
 
   let local
   let output = falafel(str, (node) => {
@@ -65,7 +72,7 @@ function parseModel (model) {
     // assign local value to this in effects
     if (/Property/.test(node.type) && ['effects', 'reducers', 'subscriptions'].indexOf(node.key.name) > -1) {
       node.value.properties.forEach(function (effect) {
-        effect.value.update('(' + effect.value.source() + ').bind(this.local)')
+        effect.value.update('(' + effect.value.source() + ').bind(chooify.local)')
       })
     }
   })
@@ -84,10 +91,9 @@ function parseView (view, local) {
   // require the package after choo/html and before the view function
   return `(function () {
       const html = require('bel')
-      const local = ${JSON5.stringify(local)}
 
       return (function (state, prev, send) {
         return html\`${clean(view)}\`
-      }).bind(local)
+      }).bind(chooify.local)
   })()`
 }

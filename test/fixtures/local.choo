@@ -2,7 +2,7 @@
 
 <main>
   <h1>${state.username} &lt;${state.mail}&gt;</h1>
-  <p>You are now <span style="color:${this.active ? 'green' : 'red'};">${this.active ? 'active' : 'not active'}</span></p>
+  <p>${this.author}, You are now <span style="color:${this.active ? 'green' : 'red'};">${this.active ? 'active' : 'not active'}</span></p>
   <button onclick=${(e) => send('toggle')}>Toggle state</button>
 </main>
 

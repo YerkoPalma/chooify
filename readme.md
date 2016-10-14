@@ -15,7 +15,7 @@
     - [x] Bind local data to this in effects.
     - [x] Bind local data to this in reducers.
     - [x] Bind local data to this in subscriptions.
-  - [ ] Allow to pass local data when required.
+  - [x] Allow to pass local data when required.
 - [ ] Create init hook.
   - [ ] Wrap initial state.
   - [ ] Re-render when there are local changes.
