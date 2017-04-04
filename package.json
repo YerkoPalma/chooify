@@ -25,7 +25,7 @@
     "through": "^2.3.8"
   },
   "devDependencies": {
-    "browserify": "^14.2.0",
+    "browserify": "^14.3.0",
     "budo": "^9.2.1",
     "chai": "^3.5.0",
     "jsdom": "^9.6.0",
