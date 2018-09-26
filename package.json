@@ -27,7 +27,7 @@
   "devDependencies": {
     "browserify": "^13.1.0",
     "budo": "^9.2.1",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "jsdom": "^9.6.0",
     "mkdirp": "^0.5.1",
     "mocha": "^3.1.0",
